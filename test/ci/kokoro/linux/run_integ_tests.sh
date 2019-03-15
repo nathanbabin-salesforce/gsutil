@@ -12,7 +12,7 @@
 # -x : Display commands being run
 # -u : Disallow unset variables
 # Doc: https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html#The-Set-Builtin
-set -exu
+set -xu
 
 # For debugging on the CI branch, let me SSH in
 # go/kokoro-ssh-vm
