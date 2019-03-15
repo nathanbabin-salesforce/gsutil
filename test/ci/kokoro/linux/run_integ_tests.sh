@@ -77,10 +77,13 @@ function init_python {
 init_python
 init_configs
 
-echo "PWD: $(pwd)"
-echo "ls: $(ls)"
+function whereami { 
+  echo "PWD: $(pwd)"
+  echo "ls: $(ls)"
+}
 
-cd gsutil
+cd github/gsutil
+whereami
 git submodule update --init --recursive
 
 # Run integration tests
