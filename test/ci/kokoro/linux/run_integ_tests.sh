@@ -17,11 +17,11 @@ set -xu
 
 GITHUB_REPO="https://github.com/GoogleCloudPlatform/gsutil"
 GSUTIL_KEY="./keystore/74008_gsutil_kokoro_service_key.json"
-GSUTIL_SRC_PATH="/src/gsutil"
+GSUTIL_SRC_PATH="github/src/gsutil"
 GSUTIL_ENTRYPOINT="$GSUTIL_SRC_PATH/gsutil.py"
 PYTHON_PATH="/usr/local/bin/python"
-CONFIG_JSON="/src/.boto_json"
-CONFIG_XML="/src/.boto_xml"
+CONFIG_JSON="github/src/.boto_json"
+CONFIG_XML="github/src/.boto_xml"
 
 # Processes to use based on default Ubuntu Kokoro specs here:
 # go/gcp-ubuntu-vm-configuration-v32i
