@@ -77,9 +77,9 @@ function init_python {
 init_python
 init_configs
 
-cd "$GSUTIL_SRC_PATH"
+cd ../../../../
 git submodule update --init --recursive
 
 # Run integration tests
-python "$GSUTIL_ENTRYPOINT" test -p "$PROCS"
+python ./gsutil.py test -p "$PROCS"
 
