@@ -78,7 +78,9 @@ init_python
 init_configs
 
 echo "PWD: $(pwd)"
-cd ../../../../
+echo "ls: $(ls)"
+
+cd gsutil
 git submodule update --init --recursive
 
 # Run integration tests
