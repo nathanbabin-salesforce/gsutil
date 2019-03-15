@@ -48,8 +48,8 @@ function latest_python_release {
 }
 
 function install_latest_python {
-  rm -rf ~/.pyenv/.git/refs/tags
-  pyenv update
+  #rm -rf ~/.pyenv/.git/refs/tags
+  #pyenv update
   pyenv install -s "$PYVERSIONTRIPLET"
 }
 
