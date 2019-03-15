@@ -73,13 +73,16 @@ init_configs
 
 # For debugging on the CI branch, let me SSH in
 # go/kokoro-ssh-vm
-echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoHMJc7f/qzDwSLfqJEYduLRpp4VX8l1c/g+tUX+29H cball@cball.sea.corp.google.com" >> ~/.ssh/authoirized_keys
-external_ip=$(curl -s -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
-echo "INSTANCE_EXTERNAL_IP=${external_ip}"
-echo "PID=$($$)"
-sleep 2400
+#echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoHMJc7f/qzDwSLfqJEYduLRpp4VX8l1c/g+tUX+29H cball@cball.sea.corp.google.com" >> ~/.ssh/authoirized_keys
+#external_ip=$(curl -s -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
+#echo "INSTANCE_EXTERNAL_IP=${external_ip}"
+#echo "PID=$($$)"
+#sleep 2400
 
-cd github/gsutil
+pwd
+ls
+sudo apt install tree -y
+tree 
 git submodule update --init --recursive
 
 # Run integration tests
