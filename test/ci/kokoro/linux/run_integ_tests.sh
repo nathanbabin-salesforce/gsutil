@@ -77,6 +77,7 @@ function init_python {
 init_python
 init_configs
 
+echo "PWD: $(pwd)"
 cd ../../../../
 git submodule update --init --recursive
 
