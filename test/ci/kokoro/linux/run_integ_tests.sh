@@ -57,6 +57,8 @@ function init_configs {
   if [[ ! -f  $CONFIG_XML ]]; then
     ../config_generator.sh "$GSUTIL_KEY" "xml" > "$CONFIG_XML"
   fi
+  echo "$CONFIG_JSON"
+  echo "$CONFIG_XML"
 }
 
 function init_python {
@@ -79,11 +81,7 @@ init_configs
 #echo "PID=$($$)"
 #sleep 2400
 
-pwd
-ls
-sudo apt-get install tree -y
 cd github/src/gsutil
-tree
 git submodule update --init --recursive
 
 # Run integration tests
