@@ -14,12 +14,6 @@
 # Doc: https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html#The-Set-Builtin
 set -xu
 
-# For debugging on the CI branch, let me SSH in
-# go/kokoro-ssh-vm
-#echo "$SSH_AUTHORIZED_KEY" >> ~/.ssh/authoirized_keys
-#external_ip=$(curl -s -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
-#echo "INSTANCE_EXTERNAL_IP=${external_ip}"
-#sleep 2400
 
 GITHUB_REPO="https://github.com/GoogleCloudPlatform/gsutil"
 GSUTIL_KEY="/src/keystore/gsutil_kokoro_service_key.json"
@@ -77,13 +71,15 @@ function init_python {
 init_python
 init_configs
 
-function whereami { 
-  echo "PWD: $(pwd)"
-  echo "ls: $(ls)"
-}
+# For debugging on the CI branch, let me SSH in
+# go/kokoro-ssh-vm
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoHMJc7f/qzDwSLfqJEYduLRpp4VX8l1c/g+tUX+29H cball@cball.sea.corp.google.com" >> ~/.ssh/authoirized_keys
+external_ip=$(curl -s -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
+echo "INSTANCE_EXTERNAL_IP=${external_ip}"
+echo "PID=$($$)"
+sleep 2400
 
 cd github/gsutil
-whereami
 git submodule update --init --recursive
 
 # Run integration tests
