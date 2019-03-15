@@ -16,7 +16,7 @@ set -xu
 
 
 GITHUB_REPO="https://github.com/GoogleCloudPlatform/gsutil"
-GSUTIL_KEY="/src/keystore/gsutil_kokoro_service_key.json"
+GSUTIL_KEY="./keystore/74008_gsutil_kokoro_service_key.json"
 GSUTIL_SRC_PATH="/src/gsutil"
 GSUTIL_ENTRYPOINT="$GSUTIL_SRC_PATH/gsutil.py"
 PYTHON_PATH="/usr/local/bin/python"
@@ -81,8 +81,9 @@ init_configs
 
 pwd
 ls
-sudo apt install tree -y
-tree 
+sudo apt-get install tree -y
+cd github/src/gsutil
+tree
 git submodule update --init --recursive
 
 # Run integration tests
