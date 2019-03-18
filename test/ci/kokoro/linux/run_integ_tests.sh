@@ -20,8 +20,8 @@ GSUTIL_KEY="./keystore/74008_gsutil_kokoro_service_key.json"
 GSUTIL_SRC_PATH="/src/gsutil"
 GSUTIL_ENTRYPOINT="$GSUTIL_SRC_PATH/gsutil.py"
 PYTHON_PATH="/usr/local/bin/python"
-CONFIG_JSON="/src/.boto_json"
-CONFIG_XML="/src/.boto_xml"
+CONFIG_JSON="../.boto_json"
+CONFIG_XML="../.boto_xml"
 
 # Processes to use based on default Ubuntu Kokoro specs here:
 # go/gcp-ubuntu-vm-configuration-v32i
@@ -51,11 +51,11 @@ function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
   if [[ ! -f  $CONFIG_JSON ]]; then
-    ../config_generator.sh "$GSUTIL_KEY" "json" > "$CONFIG_JSON"
+    "./test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "json" > "$CONFIG_JSON"
   fi
 
   if [[ ! -f  $CONFIG_XML ]]; then
-    ../config_generator.sh "$GSUTIL_KEY" "xml" > "$CONFIG_XML"
+    "./test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "xml" > "$CONFIG_XML"
   fi
   cat "$CONFIG_JSON"
   cat "$CONFIG_XML"
@@ -70,19 +70,10 @@ function init_python {
   python -m pip install -U crcmod
 }
 
-init_python
-init_configs
-
-# For debugging on the CI branch, let me SSH in
-# go/kokoro-ssh-vm
-#echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoHMJc7f/qzDwSLfqJEYduLRpp4VX8l1c/g+tUX+29H cball@cball.sea.corp.google.com" >> ~/.ssh/authoirized_keys
-#external_ip=$(curl -s -H "Metadata-Flavor: Google" http://metadata/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip)
-#echo "INSTANCE_EXTERNAL_IP=${external_ip}"
-#echo "PID=$($$)"
-#sleep 2400
-
 cd github/src/gsutil
 git submodule update --init --recursive
+init_python
+init_configs
 
 # Run integration tests
 python ./gsutil.py test -p "$PROCS"
