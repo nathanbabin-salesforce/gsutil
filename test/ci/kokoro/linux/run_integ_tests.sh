@@ -65,6 +65,8 @@ function init_python {
   pyenv global "$PYVERSIONTRIPLET"
   python -m pip install -U crcmod
 }
+ls -la "$GSUTIL_KEY"
+ls -la "/tmpfs/src/keystore"
 
 init_configs
 cd "$GSUTIL_SRC"
