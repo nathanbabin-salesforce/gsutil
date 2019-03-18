@@ -50,6 +50,8 @@ function install_latest_python {
 function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
+  touch ~/"$CONFIG_XML"
+  touch ~/"$CONFIG_JSON"
   "test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "json" "$CONFIG_JSON"
   "test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "xml" "$CONFIG_XML"
   cat "$CONFIG_JSON" | grep -v private_key
