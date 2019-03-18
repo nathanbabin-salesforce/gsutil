@@ -52,7 +52,7 @@ GSUTIL_KEY=$1
 API=$2
 OUTPUT_FILE=$3
 
-$3 << EOF
+cat > "$3" <<- EOM
 [Credentials]
 gs_service_key_file = "$GSUTIL_KEY"
 
@@ -64,7 +64,7 @@ prefer_api = "$API"
 [OAuth2]
 client_id = 909320924072.apps.googleusercontent.com
 client_secret = p3RlpR10xMFh9ZXBS/ZNLYUu
-EOF
+EOM
 }
 
 function init_configs {
