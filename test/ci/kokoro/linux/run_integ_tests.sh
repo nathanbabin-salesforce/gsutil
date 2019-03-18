@@ -78,8 +78,8 @@ function init_configs {
   write_config "$GSUTIL_KEY" "xml" "$CONFIG_XML"
   ls -la "$CONFIG_JSON" "$CONFIG_XML"
   write_config "$GSUTIL_KEY" "json" "$CONFIG_JSON"
-  cat "test/ci/kokoro/$CONFIG_JSON" | grep -v private_key
-  cat "test/ci/kokoro$CONFIG_XML" | grep -v private_key
+  cat "$CONFIG_JSON" | grep -v private_key
+  cat "$CONFIG_XML" | grep -v private_key
 }
 
 function init_python {
