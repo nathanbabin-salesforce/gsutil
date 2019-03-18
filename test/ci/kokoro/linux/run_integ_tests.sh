@@ -16,12 +16,12 @@ set -xu
 
 
 GITHUB_REPO="https://github.com/GoogleCloudPlatform/gsutil"
-GSUTIL_KEY="./keystore/74008_gsutil_kokoro_service_key.json"
-GSUTIL_SRC_PATH="/src/gsutil"
+GSUTIL_KEY="/tmpfs/src/keystore/74008_gsutil_kokoro_service_key.json"
+GSUTIL_SRC_PATH="/tmpfs/src/gsutil"
 GSUTIL_ENTRYPOINT="$GSUTIL_SRC_PATH/gsutil.py"
 PYTHON_PATH="/usr/local/bin/python"
-CONFIG_JSON=".boto_json"
-CONFIG_XML=".boto_xml"
+CONFIG_JSON="/tmpfs/src/.boto_json"
+CONFIG_XML="/tmpfs/src/.boto_xml"
 
 # Processes to use based on default Ubuntu Kokoro specs here:
 # go/gcp-ubuntu-vm-configuration-v32i
@@ -94,11 +94,11 @@ function init_python {
 
 pwd
 init_configs
-cd github/src/gsutil
+cd /tmpfs/src/github/src/gsutil
 pwd
 init_python
 git submodule update --init --recursive
 
 # Run integration tests
-python ./gsutil.py test -p "$PROCS"
+python "$GSUTIL_ENTRYPOINT" test -p "$PROCS"
 
