@@ -20,8 +20,8 @@ GSUTIL_KEY="./keystore/74008_gsutil_kokoro_service_key.json"
 GSUTIL_SRC_PATH="/src/gsutil"
 GSUTIL_ENTRYPOINT="$GSUTIL_SRC_PATH/gsutil.py"
 PYTHON_PATH="/usr/local/bin/python"
-CONFIG_JSON="../.boto_json"
-CONFIG_XML="../.boto_xml"
+CONFIG_JSON="~/.boto_json"
+CONFIG_XML="~/.boto_xml"
 
 # Processes to use based on default Ubuntu Kokoro specs here:
 # go/gcp-ubuntu-vm-configuration-v32i
@@ -51,14 +51,14 @@ function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
   if [[ ! -f  $CONFIG_JSON ]]; then
-    "./test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "json" > "$CONFIG_JSON"
+    "../config_generator.sh" "$GSUTIL_KEY" "json" > "$CONFIG_JSON"
   fi
 
   if [[ ! -f  $CONFIG_XML ]]; then
-    "./test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "xml" > "$CONFIG_XML"
+    "../config_generator.sh" "$GSUTIL_KEY" "xml" > "$CONFIG_XML"
   fi
-  cat "$CONFIG_JSON"
-  cat "$CONFIG_XML"
+  cat "$CONFIG_JSON" | grep -v private_key
+  cat "$CONFIG_XML" | grep -v private_key
 }
 
 function init_python {
@@ -70,10 +70,10 @@ function init_python {
   python -m pip install -U crcmod
 }
 
-cd github/src/gsutil
-git submodule update --init --recursive
 init_python
 init_configs
+cd github/src/gsutil
+git submodule update --init --recursive
 
 # Run integration tests
 python ./gsutil.py test -p "$PROCS"
