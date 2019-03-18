@@ -20,7 +20,7 @@ GSUTIL_KEY="./keystore/74008_gsutil_kokoro_service_key.json"
 GSUTIL_SRC_PATH="/src/gsutil"
 GSUTIL_ENTRYPOINT="$GSUTIL_SRC_PATH/gsutil.py"
 PYTHON_PATH="/usr/local/bin/python"
-CONFIG_JSON="./.boto_json"
+CONFIG_JSON=".boto_json"
 CONFIG_XML=".boto_xml"
 
 # Processes to use based on default Ubuntu Kokoro specs here:
