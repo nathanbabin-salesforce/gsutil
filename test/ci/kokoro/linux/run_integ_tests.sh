@@ -50,8 +50,8 @@ function install_latest_python {
 function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
-  "../config_generator.sh" "$GSUTIL_KEY" "json" "$CONFIG_JSON"
-  "../config_generator.sh" "$GSUTIL_KEY" "xml" "$CONFIG_XML"
+  "test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "json" "$CONFIG_JSON"
+  "test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "xml" "$CONFIG_XML"
   cat "$CONFIG_JSON" | grep -v private_key
   cat "$CONFIG_XML" | grep -v private_key
 }
@@ -65,9 +65,9 @@ function init_python {
   python -m pip install -U crcmod
 }
 
+cd github/src/gsutil
 init_python
 init_configs
-cd github/src/gsutil
 git submodule update --init --recursive
 
 # Run integration tests
