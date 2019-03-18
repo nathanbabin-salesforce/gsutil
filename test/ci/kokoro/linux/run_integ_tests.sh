@@ -57,8 +57,8 @@ function init_configs {
   if [[ ! -f  $CONFIG_XML ]]; then
     ../config_generator.sh "$GSUTIL_KEY" "xml" > "$CONFIG_XML"
   fi
-  echo "$CONFIG_JSON"
-  echo "$CONFIG_XML"
+  cat "$CONFIG_JSON"
+  cat "$CONFIG_XML"
 }
 
 function init_python {
