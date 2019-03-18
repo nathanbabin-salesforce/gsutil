@@ -72,6 +72,8 @@ function init_configs {
   # https://cloud.google.com/storage/docs/gsutil/commands/config
   touch "$CONFIG_JSON" "$CONFIG_XML"
   ls -la "$CONFIG_JSON" "$CONFIG_XML"
+  ls -la .
+  ls -la ..
   write_config "$GSUTIL_KEY" "json" "$CONFIG_JSON"
   write_config "$GSUTIL_KEY" "xml" "$CONFIG_XML"
   ls -la "$CONFIG_JSON" "$CONFIG_XML"
