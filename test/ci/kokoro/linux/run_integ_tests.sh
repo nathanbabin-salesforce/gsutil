@@ -16,7 +16,7 @@ set -xu
 
 
 GITHUB_REPO="https://github.com/GoogleCloudPlatform/gsutil"
-GSUTIL_KEY="/tmpfs/src/keystore/74008_gsutil_kokoro_service_key.json"
+GSUTIL_KEY="/tmpfs/src/keystore/74008_gsutil_kokoro_service_key"
 GSUTIL_SRC="/tmpfs/src/github/src/gsutil"
 GSUTIL_ENTRYPOINT="$GSUTIL_SRC/gsutil.py"
 CFG_GENERATOR="$GSUTIL_SRC/test/ci/kokoro/config_generator.sh"
