@@ -47,14 +47,34 @@ function install_latest_python {
   pyenv install -s "$PYVERSIONTRIPLET"
 }
 
+function write_config {
+GSUTIL_KEY=$1
+API=$2
+OUTPUT_FILE=$3
+
+$3 << EOF
+[Credentials]
+gs_service_key_file = "$GSUTIL_KEY"
+
+[GSUtil]
+test_notification_url = https://bigstore-test-notify.appspot.com/notify
+default_project_id = bigstore-gsutil-testing
+prefer_api = "$API"
+
+[OAuth2]
+client_id = 909320924072.apps.googleusercontent.com
+client_secret = p3RlpR10xMFh9ZXBS/ZNLYUu
+EOF
+}
+
 function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
   touch "$CONFIG_JSON" "$CONFIG_XML"
-  "test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "json" "$CONFIG_JSON"
-  "test/ci/kokoro/config_generator.sh" "$GSUTIL_KEY" "xml" "$CONFIG_XML"
-  cat "$CONFIG_JSON" | grep -v private_key
-  cat "$CONFIG_XML" | grep -v private_key
+  write_config "$GSUTIL_KEY" "json" "$CONFIG_JSON"
+  write_config "$GSUTIL_KEY" "xml" "$CONFIG_XML"
+  cat "test/ci/kokoro/$CONFIG_JSON" | grep -v private_key
+  cat "test/ci/kokoro$CONFIG_XML" | grep -v private_key
 }
 
 function init_python {
