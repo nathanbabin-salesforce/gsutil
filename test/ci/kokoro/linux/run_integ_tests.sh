@@ -17,8 +17,9 @@ set -xu
 
 GITHUB_REPO="https://github.com/GoogleCloudPlatform/gsutil"
 GSUTIL_KEY="/tmpfs/src/keystore/74008_gsutil_kokoro_service_key.json"
-GSUTIL_SRC_PATH="/tmpfs/src/gsutil"
-GSUTIL_ENTRYPOINT="$GSUTIL_SRC_PATH/gsutil.py"
+GSUTIL_SRC="/tmpfs/src/github/src/gsutil"
+GSUTIL_ENTRYPOINT="$GSUTIL_SRC/gsutil.py"
+CFG_GENERATOR="$GSUTIL_SRC/test/ci/kokoro/config_generator.sh"
 PYTHON_PATH="/usr/local/bin/python"
 CONFIG_JSON="/tmpfs/src/.boto_json"
 CONFIG_XML="/tmpfs/src/.boto_xml"
@@ -47,38 +48,11 @@ function install_latest_python {
   pyenv install -s "$PYVERSIONTRIPLET"
 }
 
-function write_config {
-GSUTIL_KEY=$1
-API=$2
-OUTPUT_FILE=$3
-
-cat > "$3" <<- EOM
-[Credentials]
-gs_service_key_file = "$GSUTIL_KEY"
-
-[GSUtil]
-test_notification_url = https://bigstore-test-notify.appspot.com/notify
-default_project_id = bigstore-gsutil-testing
-prefer_api = "$API"
-
-[OAuth2]
-client_id = 909320924072.apps.googleusercontent.com
-client_secret = p3RlpR10xMFh9ZXBS/ZNLYUu
-EOM
-}
-
 function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
-  touch "$CONFIG_JSON" "$CONFIG_XML"
-  pwd
+  "$CFG_GENERATOR" "$GSUTIL_KEY" "json" "$CONFIG_JSON"
   ls -la "$CONFIG_JSON" "$CONFIG_XML"
-  ls -la .
-  ls -la ..
-  write_config "$GSUTIL_KEY" "json" "$CONFIG_JSON"
-  write_config "$GSUTIL_KEY" "xml" "$CONFIG_XML"
-  ls -la "$CONFIG_JSON" "$CONFIG_XML"
-  write_config "$GSUTIL_KEY" "json" "$CONFIG_JSON"
   cat "$CONFIG_JSON" | grep -v private_key
   cat "$CONFIG_XML" | grep -v private_key
 }
@@ -92,10 +66,8 @@ function init_python {
   python -m pip install -U crcmod
 }
 
-pwd
 init_configs
-cd /tmpfs/src/github/src/gsutil
-pwd
+cd "$GSUTIL_SRC"
 init_python
 git submodule update --init --recursive
 
