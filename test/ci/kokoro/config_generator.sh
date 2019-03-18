@@ -19,8 +19,9 @@
 
 GSUTIL_KEY=$1
 API=$2
+OUTPUT_FILE=$3
 
-cat  << EOF
+$3 << EOF
 [Credentials]
 gs_service_key_file = "$GSUTIL_KEY"
 

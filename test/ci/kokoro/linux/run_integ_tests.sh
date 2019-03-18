@@ -51,11 +51,11 @@ function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
   if [[ ! -f  $CONFIG_JSON ]]; then
-    "../config_generator.sh" "$GSUTIL_KEY" "json" > "$CONFIG_JSON"
+    "../config_generator.sh" "$GSUTIL_KEY" "json" "$CONFIG_JSON"
   fi
 
   if [[ ! -f  $CONFIG_XML ]]; then
-    "../config_generator.sh" "$GSUTIL_KEY" "xml" > "$CONFIG_XML"
+    "../config_generator.sh" "$GSUTIL_KEY" "xml" "$CONFIG_XML"
   fi
   cat "$CONFIG_JSON" | grep -v private_key
   cat "$CONFIG_XML" | grep -v private_key
