@@ -71,6 +71,7 @@ function init_configs {
   # Create config files for gsutil if they don't exist already
   # https://cloud.google.com/storage/docs/gsutil/commands/config
   touch "$CONFIG_JSON" "$CONFIG_XML"
+  pwd
   ls -la "$CONFIG_JSON" "$CONFIG_XML"
   ls -la .
   ls -la ..
@@ -91,8 +92,10 @@ function init_python {
   python -m pip install -U crcmod
 }
 
+pwd
 init_configs
 cd github/src/gsutil
+pwd
 init_python
 git submodule update --init --recursive
 
